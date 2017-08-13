@@ -1,0 +1,93 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: SPIR-V
+scopeName: source.spirv
+fileTypes: [spvasm, spvas, spv.as]
+uuid: a05f770c-5ea3-433d-be01-7053adccd167
+
+patterns:
+  - include: "#languages"
+  - include: "#execution_models"
+  - include: "#addressing_models"
+  - include: "#memory_models"
+  - include: "#execution_modes"
+  - include: "#storage_classes"
+  - include: "#decorations"
+  - include: "#builtins"
+  - include: "#capabilities"  
+  - include: "#ops"  
+
+  - name:  storage.type
+    match: \b(OpTypeVoid|OpTypeBool|OpTypeInt|OpTypeFloat|OpTypeVector|OpTypeMatrix|OpTypeImage|OpTypeSampler|OpTypeSampledImage|OpTypeArray|OpTypeRuntimeArray|OpTypeStruct|OpTypeOpaque|OpTypePointer|OpTypeFunction|OpTypeEvent|OpTypeDeviceEvent|OpTypeReserveId|OpTypeQueue|OpTypePipe|OpTypeForwardPointer)\b
+
+  - name: entity.name.type
+    match: OpVariable
+
+  - name: support.function
+    match: \b(OpFunction|OpFunctionEnd|OpFunctionCall|OpFunctionParameter)\b
+    
+  - name: constant.numeric
+    match: \s+-?\d+
+
+  - name: constant.other
+    match: \b(OpConstantTrue|OpConstantFalse|OpConstant|OpConstantComposite|OpConstantSampler|OpConstantNull)\b
+
+  - name: comment.line
+    match: (;).*$\n?
+    captures:
+      '1': {name: punctuation.definition.comment}
+
+  - name: string.quoted.double
+    begin: '"'
+    end: (?<!\\)"
+
+
+repository:
+  languages:
+    patterns:
+      - name: constant.language
+        match: \b(Unknown|ESSL|GLSL|OpenCL_C|OpenCL_CPP|HLSL)\b
+
+  execution_models:
+    patterns:
+      - name: constant.language
+        match: \b(Vertex|essellationControl|TessellationEvaluation|Geometry|Fragment|GLCompute|Kernel)\b
+
+  addressing_models:
+    patterns:
+      - name: constant.language
+        match: \b(Logical|Physical32|Physical64)\b
+
+  memory_models:
+    patterns:
+      - name: constant.language
+        match: \b(Simple|GLSL450|OpenCL)\b
+
+  execution_modes:
+    patterns:
+      - name: constant.language
+        match: \b(Invocations|SpacingEqual|SpacingFractionalEven|SpacingFractionalOdd|VertexOrderCw|VertexOrderCcw|PixelCenterInteger|OriginUpperLeft|OriginLowerLeft|EarlyFragmentTests|PointMode|Xfb|DepthReplacing|DepthGreater|DepthLess|DepthUnchanged|LocalSize|LocalSizeHint|InputPoints|InputLines|InputLinesAdjacency|Triangles|InputTrianglesAdjacency|Quads|Isolines|OutputVertices|OutputPoints|OutputLineStrip|OutputTriangleStrip|VecTypeHint|ContractionOff|Initializer|Finalizer|SubgroupSize|SubgroupsPerWorkgroup)\b
+
+  storage_classes:
+    patterns:
+      - name: constant.language
+        match: \b(UniformConstant|Input|Uniform|Output|Workgroup|CrossWorkgroup|Private|Function|Generic|PushConstant|AtomicCounter|Image|StorageBuffer)\b
+
+  decorations:
+    patterns:
+      - name: constant.language
+        match: \b(RelaxedPrecision|SpecId|Block|BufferBlock|RowMajor|ColMajor|ArrayStride|MatrixStride|GLSLShared|GLSLPacked|CPacked|BuiltIn|NoPerspective|Flat|Patch|Centroid|Sample|Invariant|Restrict|Aliased|Volatile|Constant|Coherent|NonWritable|NonReadable|Uniform|SaturatedConversion|Stream|Location|Component|Index|Binding|DescriptorSet|Offset|XfbBuffer|XfbStride|FuncParamAttr|FPRoundingMode|FPFastMathMode|LinkageAttributes|NoContraction|InputAttachmentIndex|Alignment|MaxByteOffset|OverrideCoverageNV|PassthroughNV|ViewportRelativeNV|SecondaryViewportRelativeNV)\b
+
+  builtins:
+    patterns:
+      - name: constant.language
+        match: \b(Position|PointSize|ClipDistance|CullDistance|VertexId|InstanceId|PrimitiveId|InvocationId|Layer|ViewportIndex|TessLevelOuter|TessLevelInner|TessCoord|PatchVertices|FragCoord|PointCoord|FrontFacing|SampleId|SamplePosition|SampleMask|FragDepth|HelperInvocation|NumWorkgroups|WorkgroupSize|WorkgroupId|LocalInvocationId|GlobalInvocationId|LocalInvocationIndex|WorkDim|GlobalSize|EnqueuedWorkgroupSize|GlobalOffset|GlobalLinearId|SubgroupSize|SubgroupMaxSize|NumSubgroups|NumEnqueuedSubgroups|SubgroupId|SubgroupLocalInvocationId|VertexIndex|InstanceIndex|SubgroupEqMaskKHR|SubgroupGeMaskKHR|SubgroupGtMaskKHR|SubgroupLeMaskKHR|SubgroupLtMaskKHR|BaseVertex|BaseInstance|DrawIndex|DeviceIndex|ViewIndex|ViewportMaskNV|SecondaryPositionNV|SecondaryViewportMaskNV|PositionPerViewNV|ViewportMaskPerViewNV)\b
+
+  capabilities:
+    patterns:
+      - name: constant.language 
+        match: \b(Matrix|Shader|Geometry|Tessellation|Addresses|Linkage|Kernel|Vector16|Float16Buffer|Float16|Float64|Int64|Int64Atomics|ImageBasic|ImageReadWrite|ImageMipmap|Pipes|Groups|DeviceEnqueue|LiteralSampler|AtomicStorage|Int16|TessellationPointSize|GeometryPointSize|ImageGatherExtended|StorageImageMultisample|UniformBufferArrayDynamicIndexing|SampledImageArrayDynamicIndexing|StorageBufferArrayDynamicIndexing|StorageImageArrayDynamicIndexing|ClipDistance|CullDistance|ImageCubeArray|SampleRateShading|ImageRect|SampledRect|GenericPointer|Int8|InputAttachment|SparseResidency|MinLod|Sampled1D|Image1D|SampledCubeArray|SampledBuffer|ImageBuffer|ImageMSArray|StorageImageExtendedFormats|ImageQuery|DerivativeControl|InterpolationFunction|TransformFeedback|GeometryStreams|StorageImageReadWithoutFormat|StorageImageWriteWithoutFormat|MultiViewport|SubgroupDispatch|NamedBarrier|PipeStorage|SubgroupBallotKHR|DrawParameters|SubgroupVoteKHR|StorageBuffer16BitAccess|StorageUniformBufferBlock16|StorageUniform16|UniformAndStorageBuffer16BitAccess|StoragePushConstant16|StorageInputOutput16|DeviceGroup|MultiView|VariablePointersStorageBuffer|VariablePointers|SampleMaskOverrideCoverageNV|GeometryShaderPassthroughNV|ShaderViewportIndexLayerNV|ShaderViewportMaskNV|ShaderStereoViewNV|PerViewAttributesNV)\b
+
+  ops:
+    patterns:
+      - name: keyword.other
+        match: \b(OpNop|OpUndef|OpSourceContinued|OpSource|OpSourceExtension|OpName|OpMemberName|OpString|OpLine|OpExtension|OpExtInstImport|OpExtInst|OpMemoryModel|OpEntryPoint|OpExecutionMode|OpCapability|OpSpecConstantTrue|OpSpecConstantFalse|OpSpecConstant|OpSpecConstantComposite|OpSpecConstantOp|OpImageTexelPointer|OpLoad|OpStore|OpCopyMemory|OpCopyMemorySized|OpAccessChain|OpInBoundsAccessChain|OpPtrAccessChain|OpArrayLength|OpGenericPtrMemSemantics|OpInBoundsPtrAccessChain|OpDecorate|OpMemberDecorate|OpDecorationGroup|OpGroupDecorate|OpGroupMemberDecorate|OpVectorExtractDynamic|OpVectorInsertDynamic|OpVectorShuffle|OpCompositeConstruct|OpCompositeExtract|OpCompositeInsert|OpCopyObject|OpTranspose|OpSampledImage|OpImageSampleImplicitLod|OpImageSampleExplicitLod|OpImageSampleDrefImplicitLod|OpImageSampleDrefExplicitLod|OpImageSampleProjImplicitLod|OpImageSampleProjExplicitLod|OpImageSampleProjDrefImplicitLod|OpImageSampleProjDrefExplicitLod|OpImageFetch|OpImageGather|OpImageDrefGather|OpImageRead|OpImageWrite|OpImage|OpImageQueryFormat|OpImageQueryOrder|OpImageQuerySizeLod|OpImageQuerySize|OpImageQueryLod|OpImageQueryLevels|OpImageQuerySamples|OpConvertFToU|OpConvertFToS|OpConvertSToF|OpConvertUToF|OpUConvert|OpSConvert|OpFConvert|OpQuantizeToF16|OpConvertPtrToU|OpSatConvertSToU|OpSatConvertUToS|OpConvertUToPtr|OpPtrCastToGeneric|OpGenericCastToPtr|OpGenericCastToPtrExplicit|OpBitcast|OpSNegate|OpFNegate|OpIAdd|OpFAdd|OpISub|OpFSub|OpIMul|OpFMul|OpUDiv|OpSDiv|OpFDiv|OpUMod|OpSRem|OpSMod|OpFRem|OpFMod|OpVectorTimesScalar|OpMatrixTimesScalar|OpVectorTimesMatrix|OpMatrixTimesVector|OpMatrixTimesMatrix|OpOuterProduct|OpDot|OpIAddCarry|OpISubBorrow|OpUMulExtended|OpSMulExtended|OpAny|OpAll|OpIsNan|OpIsInf|OpIsFinite|OpIsNormal|OpSignBitSet|OpLessOrGreater|OpOrdered|OpUnordered|OpLogicalEqual|OpLogicalNotEqual|OpLogicalOr|OpLogicalAnd|OpLogicalNot|OpSelect|OpIEqual|OpINotEqual|OpUGreaterThan|OpSGreaterThan|OpUGreaterThanEqual|OpSGreaterThanEqual|OpULessThan|OpSLessThan|OpULessThanEqual|OpSLessThanEqual|OpFOrdEqual|OpFUnordEqual|OpFOrdNotEqual|OpFUnordNotEqual|OpFOrdLessThan|OpFUnordLessThan|OpFOrdGreaterThan|OpFUnordGreaterThan|OpFOrdLessThanEqual|OpFUnordLessThanEqual|OpFOrdGreaterThanEqual|OpFUnordGreaterThanEqual|OpShiftRightLogical|OpShiftRightArithmetic|OpShiftLeftLogical|OpBitwiseOr|OpBitwiseXor|OpBitwiseAnd|OpNot|OpBitFieldInsert|OpBitFieldSExtract|OpBitFieldUExtract|OpBitReverse|OpBitCount|OpDPdx|OpDPdy|OpFwidth|OpDPdxFine|OpDPdyFine|OpFwidthFine|OpDPdxCoarse|OpDPdyCoarse|OpFwidthCoarse|OpEmitVertex|OpEndPrimitive|OpEmitStreamVertex|OpEndStreamPrimitive|OpControlBarrier|OpMemoryBarrier|OpAtomicLoad|OpAtomicStore|OpAtomicExchange|OpAtomicCompareExchange|OpAtomicCompareExchangeWeak|OpAtomicIIncrement|OpAtomicIDecrement|OpAtomicIAdd|OpAtomicISub|OpAtomicSMin|OpAtomicUMin|OpAtomicSMax|OpAtomicUMax|OpAtomicAnd|OpAtomicOr|OpAtomicXor|OpPhi|OpLoopMerge|OpSelectionMerge|OpLabel|OpBranch|OpBranchConditional|OpSwitch|OpKill|OpReturn|OpReturnValue|OpUnreachable|OpLifetimeStart|OpLifetimeStop|OpGroupAsyncCopy|OpGroupWaitEvents|OpGroupAll|OpGroupAny|OpGroupBroadcast|OpGroupIAdd|OpGroupFAdd|OpGroupFMin|OpGroupUMin|OpGroupSMin|OpGroupFMax|OpGroupUMax|OpGroupSMax|OpReadPipe|OpWritePipe|OpReservedReadPipe|OpReservedWritePipe|OpReserveReadPipePackets|OpReserveWritePipePackets|OpCommitReadPipe|OpCommitWritePipe|OpIsValidReserveId|OpGetNumPipePackets|OpGetMaxPipePackets|OpGroupReserveReadPipePackets|OpGroupReserveWritePipePackets|OpGroupCommitReadPipe|OpGroupCommitWritePipe|OpEnqueueMarker|OpEnqueueKernel|OpGetKernelNDrangeSubGroupCount|OpGetKernelNDrangeMaxSubGroupSize|OpGetKernelWorkGroupSize|OpGetKernelPreferredWorkGroupSizeMultiple|OpRetainEvent|OpReleaseEvent|OpCreateUserEvent|OpIsValidEvent|OpSetUserEventStatus|OpCaptureEventProfilingInfo|OpGetDefaultQueue|OpBuildNDRange|OpImageSparseSampleImplicitLod|OpImageSparseSampleExplicitLod|OpImageSparseSampleDrefImplicitLod|OpImageSparseSampleDrefExplicitLod|OpImageSparseSampleProjImplicitLod|OpImageSparseSampleProjExplicitLod|OpImageSparseSampleProjDrefImplicitLod|OpImageSparseSampleProjDrefExplicitLod|OpImageSparseFetch|OpImageSparseGather|OpImageSparseDrefGather|OpImageSparseTexelsResident|OpNoLine|OpAtomicFlagTestAndSet|OpAtomicFlagClear|OpImageSparseRead|OpSizeOf|OpTypePipeStorage|OpConstantPipeStorage|OpCreatePipeFromPipeStorage|OpGetKernelLocalSizeForSubgroupCount|OpGetKernelMaxNumSubgroups|OpTypeNamedBarrier|OpNamedBarrierInitialize|OpMemoryNamedBarrier|OpModuleProcessed|OpSubgroupBallotKHR|OpSubgroupFirstInvocationKHR|OpSubgroupAllKHR|OpSubgroupAnyKHR|OpSubgroupAllEqualKHR|OpSubgroupReadInvocationKHR)\b
