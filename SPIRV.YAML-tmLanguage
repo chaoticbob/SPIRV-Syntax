@@ -50,7 +50,7 @@ repository:
   execution_models:
     patterns:
       - name: constant.language
-        match: \b(Vertex|essellationControl|TessellationEvaluation|Geometry|Fragment|GLCompute|Kernel)\b
+        match: \b(Vertex|TessellationControl|TessellationEvaluation|Geometry|Fragment|GLCompute|Kernel)\b
 
   addressing_models:
     patterns:
